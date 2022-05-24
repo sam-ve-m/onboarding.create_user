@@ -1,5 +1,5 @@
 # Jormungandr
-from ..env_config import config
+from decouple import config
 
 # Third party
 from motor.motor_asyncio import AsyncIOMotorClient

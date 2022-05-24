@@ -1,9 +1,10 @@
 # Jormungandr
-from ..domain.exceptions import EmailAlredyExists
+from ..domain.exceptions import EmailAlreadyExists
 from ..domain.user.model import UserModel
 from ..repositories.user.repository import UserRepository
 from ..transports.audit.transport import Audit
 from ..transports.social.transport import Social
+
 
 # Third party
 from etria_logger import Gladsheim
@@ -15,14 +16,18 @@ class UserService:
         self.nickname = user_params.get('nickname')
 
     async def register(self):
-        user = UserModel(email=self.email, nickname=self.nickname).to_dict()
-        await Audit.register_user_log(user=user)
-        await Social.register_user(user=user)
+        user_model = UserModel(email=self.email, nickname=self.nickname)
+        audit_user_template = user_model.get_audit_prospect_user_template()
+        social_user_template = user_model.get_social_prospect_user_template_()
+        user = user_model.to_dict()
+        await Audit.register_user_log(user_model=audit_user_template)
+        await Social.register_user(user_model=social_user_template)
         await UserRepository.insert_one_user(user=user)
+        # TODO Avisar ao Kafka da Iara, para enviar o email de confirmação, aguardar o client que sera feito pelo marcao
         return True
 
-    async def verify_email_alredy_exists(self):
+    async def verify_email_already_exists(self):
         email_in_use = await UserRepository.find_one_by_email(email=self.email)
         if email_in_use:
-            Gladsheim.error(message="UserService::verify_email_alredy_exists:: Email alredy exists")
-            raise EmailAlredyExists
+            Gladsheim.error(message="UserService::verify_email_already_exists:: Email already exists")
+            raise EmailAlreadyExists

@@ -1,0 +1,48 @@
+apiVersion: fission.io/v1
+kind: Environment
+metadata:
+  creationTimestamp: null
+  name: create-user-env
+  namespace: default
+spec:
+  builder:
+    command: build
+    image: nexus.sigame.com.br/python-builder-3.8:0.0.2
+  imagepullsecret: ""
+  keeparchive: false
+  poolsize: 3
+  resources: {}
+  runtime:
+    image: nexus.sigame.com.br/fission-async:0.1.6
+    podspec:
+      containers:
+      - name: create-user-env
+        env:
+        - name: ROOT_LOG_LEVEL
+          value: "INFO"
+        - name: ETRIA_LOG_LEVEL
+          value: "INFO"
+        - name: ASGI_FRAMEWORK
+          value: "HYPERCORN"
+        - name: PERSEPHONE_SCHEMA
+          value: "prospect_user_schema"
+        - name: PERSEPHONE_TOPIC_USER
+          value: "sphinx_persephone.user.crud"
+        - name: PERSEPHONE_QUEUE_HOST
+          value: "172.30.10.105"
+        - name: PERSEPHONE_QUEUE_PORT
+          value: "9092"
+        - name: PERSEPHONE_KAFKA_BROKERS
+          value: "172.30.10.105:9092"
+        - name: VALHALLA_HOST
+          value: "172.30.10.105"
+        - name: VALHALLA_PORT
+          value: "9092"
+        - name: MONGO_CONNECTION_URL
+          value: "mongodb://bnd:jkl321pqr@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary&appname=MongoDB%20Compass&ssl=false"
+        - name: MONGODB_DATABASE_NAME
+          value: "lionx"
+        - name: MONGODB_USER_COLLECTION
+          value: "users"
+
+  version: 2

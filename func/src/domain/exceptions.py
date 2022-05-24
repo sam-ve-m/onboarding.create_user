@@ -2,7 +2,7 @@ class InvalidEmail(Exception):
     msg = "Invalid email address"
 
 
-class EmailAlredyExists(Exception):
+class EmailAlreadyExists(Exception):
     msg = "Email alredy exists"
 
 

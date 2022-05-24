@@ -1,0 +1,55 @@
+include:
+- ./func/*
+kind: ArchiveUploadSpec
+name: func-HAvb
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: create-user-fn-0cfc1686-4a34-43cd-8436-5e906b690187
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: create-user-env
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://func-HAvb
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2022-05-20T21:24:53Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: create-user-fn
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: newdeploy
+      MaxScale: 1
+      MinScale: 1
+      SpecializationTimeout: 120
+      TargetCPUPercent: 80
+    StrategyType: execution
+  concurrency: 500
+  environment:
+    name: create-user-env
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    functionName: main.create_user
+    packageref:
+      name: create-user-fn-0cfc1686-4a34-43cd-8436-5e906b690187
+      namespace: default
+  requestsPerPod: 1
+  resources: {}

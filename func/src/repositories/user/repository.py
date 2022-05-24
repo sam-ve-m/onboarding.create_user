@@ -1,6 +1,6 @@
 # Jormungandr
 from ...infrastructures.mongo_db.infrastructure import MongoDBInfrastructure
-from ...infrastructures.env_config import config
+from decouple import config
 
 # Third party
 from etria_logger import Gladsheim
