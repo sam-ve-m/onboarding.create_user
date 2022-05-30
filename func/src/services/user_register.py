@@ -17,11 +17,9 @@ class UserService:
 
     async def register(self):
         user_model = UserModel(email=self.email, nickname=self.nickname)
-        audit_user_template = user_model.get_audit_prospect_user_template()
-        social_user_template = user_model.get_social_prospect_user_template_()
         user = user_model.to_dict()
-        await Audit.register_user_log(user_model=audit_user_template)
-        await Social.register_user(user_model=social_user_template)
+        await Audit.register_user_log(user_model=user_model)
+        await Social.register_user(user_model=user_model)
         await UserRepository.insert_one_user(user=user)
         # TODO Avisar ao Kafka da Iara, para enviar o email de confirmação, aguardar o client que sera feito pelo marcao
         return True
@@ -29,5 +27,5 @@ class UserService:
     async def verify_email_already_exists(self):
         email_in_use = await UserRepository.find_one_by_email(email=self.email)
         if email_in_use:
-            Gladsheim.error(message="UserService::verify_email_already_exists:: Email already exists")
+            Gladsheim.warning(message="UserService::verify_email_already_exists:: Email already exists")
             raise EmailAlreadyExists

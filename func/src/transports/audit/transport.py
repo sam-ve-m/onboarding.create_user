@@ -9,8 +9,6 @@ from etria_logger import Gladsheim
 from persephone_client import Persephone
 
 
-
-
 class Audit:
     audit_client = Persephone
     partition = QueueTypes.PROSPECT_USER.value
