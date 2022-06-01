@@ -3,7 +3,7 @@ class InvalidEmail(Exception):
 
 
 class EmailAlreadyExists(Exception):
-    msg = "Email alredy exists"
+    msg = "Email already exists"
 
 
 class ErrorOnSendAuditLog(Exception):

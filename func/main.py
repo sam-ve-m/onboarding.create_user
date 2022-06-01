@@ -33,11 +33,11 @@ async def create_user():
         ).build_http_response(status=HTTPStatus.OK)
         return response
 
-    except EmailAlreadyExists:
+    except EmailAlreadyExists as ex:
         response = ResponseModel(
             success=True,
             code=InternalCode.DATA_ALREADY_EXISTS,
-            message="Email already in use",
+            message=ex.msg,
         ).build_http_response(status=HTTPStatus.CONFLICT)
         return response
 
@@ -53,11 +53,11 @@ async def create_user():
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
 
-    except InvalidEmail:
+    except InvalidEmail as ex:
         response = ResponseModel(
             success=False,
             code=InternalCode.INVALID_PARAMS,
-            message="Invalid format email",
+            message=ex.msg,
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 

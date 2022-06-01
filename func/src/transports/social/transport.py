@@ -1,12 +1,11 @@
 # Jormungandr
 from ...domain.exceptions import ErrorOnRegisterUserSocial
-from decouple import config
+from ...domain.user.model import UserModel
 
 # Third party
-from valhalla_client.main import SocialNetworkQueue, Producer
+from decouple import config
 from etria_logger import Gladsheim
-
-from ...domain.user.model import UserModel
+from valhalla_client.main import SocialNetworkQueue, Producer
 
 
 class Social:
