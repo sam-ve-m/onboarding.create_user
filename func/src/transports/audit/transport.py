@@ -13,7 +13,7 @@ class Audit:
     audit_client = Persephone
     partition = QueueTypes.PROSPECT_USER.value
     topic = config("PERSEPHONE_TOPIC_USER")
-    schema_name = config("PERSEPHONE_SCHEMA")
+    schema_name = config("PERSEPHONE_CREATE_USER_SCHEMA")
 
     @classmethod
     async def register_user_log(cls, user_model: UserModel):

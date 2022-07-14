@@ -30,7 +30,7 @@ spec:
               value: "INFO"
             - name: ASGI_FRAMEWORK
               value: "HYPERCORN"
-            - name: PERSEPHONE_SCHEMA
+            - name: PERSEPHONE_CREATE_USER_SCHEMA
               value: "prospect_user_schema"
             - name: PERSEPHONE_TOPIC_USER
               value: "sphinx_persephone.user.crud"
@@ -41,7 +41,7 @@ spec:
             - name: PERSEPHONE_KAFKA_BROKERS
               value: "172.30.10.105:9092"
             - name: MONGO_CONNECTION_URL
-              value: "mongodb://bnd:jkl321pqr@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary&appname=MongoDB%20Compass&ssl=false"
+              value: "mongodb://jormungandr:LIwn1In32LdowPqma@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary"
             - name: MONGODB_DATABASE_NAME
               value: "lionx"
             - name: MONGODB_USER_COLLECTION
