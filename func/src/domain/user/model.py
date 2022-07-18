@@ -1,6 +1,6 @@
 # Jormungandr
 from ..enums.user.features import Features
-from ..enums.user.type import UserType
+from ..enums.user.level import UserLevel
 from ..enums.user.view_type import ViewType
 
 # Standards
@@ -10,7 +10,7 @@ from uuid import uuid4
 
 class Scope:
     def __init__(self):
-        self.user_level = UserType.PROSPECT
+        self.user_level = UserLevel.PROSPECT
         self.view_type = ViewType.DEFAULT
         self.features = [Features.DEFAULT]
 
@@ -46,22 +46,21 @@ class UserModel:
         return user_metadata
 
     def get_audit_prospect_user_template(self) -> dict:
-        prospect_user_model = {
+        prospect_user_template = {
             "unique_id": self.unique_id,
             "email": self.email,
             "nick_name": self.nickname,
             "create_user_time_stamp": int(datetime.utcnow().timestamp()),
         }
-        return prospect_user_model
+        return prospect_user_template
 
     def get_social_prospect_user_template_(self) -> dict:
-        prospect_user_model = {
+        prospect_user_msg_template = {
             "user_type": self.scope.user_level,
-            "nickname": self.nickname,
+            "name": self.nickname,
             "unique_id": self.unique_id,
-            # TODO remover parametros chumbados, depende do valhalla_client
-            "username": "teste",
-            "user_gender": "male",
-            "region": "br",
         }
-        return prospect_user_model
+        return prospect_user_msg_template
+
+        #TODO validar nome/apelido do usuário
+        # (nick_name persephone, name Valhalla, e nickname, se ficará de uma forma em cada projeto)

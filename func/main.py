@@ -33,12 +33,20 @@ async def create_user():
         ).build_http_response(status=HTTPStatus.OK)
         return response
 
+    except InvalidEmail as ex:
+        response = ResponseModel(
+            success=False,
+            code=InternalCode.INVALID_PARAMS,
+            message=ex.msg,
+        ).build_http_response(status=HTTPStatus.BAD_REQUEST)
+        return response
+
     except EmailAlreadyExists as ex:
         response = ResponseModel(
             success=True,
             code=InternalCode.DATA_ALREADY_EXISTS,
             message=ex.msg,
-        ).build_http_response(status=HTTPStatus.CONFLICT)
+        ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except ErrorOnRegisterUserSocial:
@@ -51,14 +59,6 @@ async def create_user():
         response = ResponseModel(
             success=False, code=InternalCode.PARTNERS_ERROR, message=message
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
-        return response
-
-    except InvalidEmail as ex:
-        response = ResponseModel(
-            success=False,
-            code=InternalCode.INVALID_PARAMS,
-            message=ex.msg,
-        ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except ValueError:
