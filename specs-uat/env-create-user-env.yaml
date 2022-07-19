@@ -34,10 +34,10 @@ spec:
               value: "prospect_user_schema"
             - name: PERSEPHONE_TOPIC_USER
               value: "sphinx_persephone.user.crud"
-            - name: PERSEPHONE_KAFKA_BROKERS
+            - name: APERSEPHONE_KAFKA_BROKERS
               value: "cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
             - name: MONGO_CONNECTION_URL
-              value: "mongodb://jormungandr:LIwn1In32LdowPqma@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary"
+              value: "mongodb://jormungandr:MMhsdanNNds32Malmnwqyrte@172.30.18.223:41000,172.30.19.240:41000,172.30.19.71:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary&ssl=false"
             - name: MONGODB_DATABASE_NAME
               value: "lionx"
             - name: MONGODB_USER_COLLECTION

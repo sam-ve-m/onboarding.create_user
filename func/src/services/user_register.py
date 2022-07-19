@@ -3,7 +3,6 @@ from ..domain.exceptions import EmailAlreadyExists
 from ..domain.user.model import UserModel
 from ..repositories.user.repository import UserRepository
 from ..transports.audit.transport import Audit
-from ..transports.social.transport import Social
 
 
 # Third party
@@ -19,7 +18,6 @@ class UserService:
         user_model = UserModel(email=self.email, nickname=self.nickname)
         user = user_model.to_dict()
         await Audit.register_user_log(user_model=user_model)
-        await Social.register_user(user_model=user_model)
         await UserRepository.insert_one_user(user=user)
         # TODO Avisar ao Kafka da Iara, para enviar o email de confirmação, aguardar o client que sera feito pelo marcao
         return True

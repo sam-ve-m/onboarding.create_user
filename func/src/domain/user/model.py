@@ -53,14 +53,3 @@ class UserModel:
             "create_user_time_stamp": int(datetime.utcnow().timestamp()),
         }
         return prospect_user_template
-
-    def get_social_prospect_user_template_(self) -> dict:
-        prospect_user_msg_template = {
-            "user_type": self.scope.user_level,
-            "name": self.nickname,
-            "unique_id": self.unique_id,
-        }
-        return prospect_user_msg_template
-
-        #TODO validar nome/apelido do usuário
-        # (nick_name persephone, name Valhalla, e nickname, se ficará de uma forma em cada projeto)
