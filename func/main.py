@@ -6,7 +6,6 @@ from src.domain.response.model import ResponseModel
 from src.domain.exceptions import (
     InvalidEmail,
     EmailAlreadyExists,
-    ErrorOnRegisterUserSocial,
     ErrorOnSendAuditLog,
 )
 
@@ -47,12 +46,6 @@ async def create_user():
             code=InternalCode.DATA_ALREADY_EXISTS,
             message=ex.msg,
         ).build_http_response(status=HTTPStatus.BAD_REQUEST)
-        return response
-
-    except ErrorOnRegisterUserSocial:
-        response = ResponseModel(
-            success=False, code=InternalCode.PARTNERS_ERROR, message=message
-        ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response
 
     except ErrorOnSendAuditLog:

@@ -15,6 +15,7 @@ class UserService:
         self.nickname = user_params.get('nickname')
 
     async def register(self):
+        # TODO Usar onboarding steps
         user_model = UserModel(email=self.email, nickname=self.nickname)
         user = user_model.to_dict()
         await Audit.register_user_log(user_model=user_model)

@@ -33,7 +33,7 @@ spec:
             - name: PERSEPHONE_CREATE_USER_SCHEMA
               value: "prospect_user_schema"
             - name: PERSEPHONE_TOPIC_USER
-              value: "sphinx_persephone.user.crud"
+              value: "sphinx-persephone.user.crud"
             - name: APERSEPHONE_KAFKA_BROKERS
               value: "cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
             - name: MONGO_CONNECTION_URL
