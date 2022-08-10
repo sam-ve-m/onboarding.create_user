@@ -27,7 +27,7 @@ class UserModel:
         self.token_valid_after = datetime.utcnow()
         self.terms = {}
 
-    def to_dict(self) -> dict:
+    def get_user_template(self) -> dict:
         user_metadata = {
             "email": self.email,
             "nick_name": self.nickname,

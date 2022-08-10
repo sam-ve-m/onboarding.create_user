@@ -23,12 +23,12 @@ class UserRepository:
             raise ex
 
     @classmethod
-    async def insert_one_user(cls, user: dict):
+    async def insert_one_user(cls, user_template: dict):
         collection = await cls.__get_collection()
         try:
-            await collection.insert_one(user)
+            await collection.insert_one(user_template)
         except Exception as ex:
-            message = f'UserRepository::insert_one_user::with this query::"user":{user}'
+            message = f'UserRepository::insert_one_user::with this query::{user_template=}'
             Gladsheim.error(error=ex, message=message)
             raise ex
 
@@ -39,6 +39,6 @@ class UserRepository:
             result = await collection.find_one({'email': email}, {'_id': True})
             return result
         except Exception as ex:
-            message = f'UserRepository::find_one_by_email::with this query::"email":{email}'
+            message = f'UserRepository::find_one_by_email::with this query::{email=}'
             Gladsheim.error(error=ex, message=message)
             raise ex

@@ -34,23 +34,20 @@ async def test_when_run_function_then_find_one_was_called(mock_find_one, user_se
 
 @pytest.mark.asyncio
 @patch('func.src.services.user_register.UserRepository.insert_one_user')
-@patch('func.src.services.user_register.Social.register_user')
 @patch('func.src.services.user_register.Audit.register_user_log')
-async def test_when_user_not_exist_then_successfully_register(mock_audit, mock_social, mock_insert_one, user_service):
+async def test_when_user_not_exist_then_successfully_register(mock_audit, mock_insert_one, user_service):
     success = await user_service.register()
 
     assert success is True
 
 
 @pytest.mark.asyncio
-@patch('func.src.services.user_register.UserModel.to_dict', return_value=stub_user_model)
+@patch('func.src.services.user_register.UserModel.get_user_template', return_value=stub_user_model)
 @patch('func.src.services.user_register.UserRepository.insert_one_user')
-@patch('func.src.services.user_register.Social.register_user')
 @patch('func.src.services.user_register.Audit.register_user_log')
-async def test_when_user_not_exist_then_mocks_was_called(mock_audit, mock_social, mock_insert_one, mock_user, user_service):
+async def test_when_user_not_exist_then_mocks_was_called(mock_audit, mock_insert_one, mock_user, user_service):
     await user_service.register()
 
     mock_user.assert_called_once_with()
     mock_audit.assert_called_once()
-    mock_social.assert_called_once()
     mock_insert_one.assert_called_once()

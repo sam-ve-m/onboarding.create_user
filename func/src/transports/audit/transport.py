@@ -5,13 +5,12 @@ from ...domain.user.model import UserModel
 
 # Third party
 from decouple import config
-from etria_logger import Gladsheim
 from persephone_client import Persephone
 
 
 class Audit:
     audit_client = Persephone
-    partition = QueueTypes.PROSPECT_USER.value
+    partition = QueueTypes.PROSPECT_USER
     topic = config("PERSEPHONE_TOPIC_USER")
     schema_name = config("PERSEPHONE_CREATE_USER_SCHEMA")
 
@@ -28,5 +27,4 @@ class Audit:
             schema_name=cls.schema_name,
         )
         if not success:
-            Gladsheim.error(message="Audit::register_user_log::Error on trying to register log")
             raise ErrorOnSendAuditLog
