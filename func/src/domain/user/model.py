@@ -53,3 +53,9 @@ class UserModel:
             "create_user_time_stamp": int(datetime.utcnow().timestamp()),
         }
         return prospect_user_template
+
+    def get_iara_user_template(self):
+        iara_user_template = {
+            "unique_id": self.unique_id
+        }
+        return iara_user_template

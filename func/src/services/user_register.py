@@ -3,6 +3,7 @@ from ..domain.exceptions import EmailAlreadyExists
 from ..domain.user.model import UserModel
 from ..repositories.user.repository import UserRepository
 from ..transports.audit.transport import Audit
+from ..transports.iara.transport import IaraClient
 
 
 class UserService:
@@ -15,7 +16,7 @@ class UserService:
         user_template = user_model.get_user_template()
         await Audit.register_user_log(user_model=user_model)
         await UserRepository.insert_one_user(user_template=user_template)
-        # TODO: implementar Iara_client.
+        await IaraClient.send_to_email_verification_queue(user_model=user_model)  # TODO: finalize Iara_client implementation.
         return True
 
     async def verify_email_already_exists(self):
