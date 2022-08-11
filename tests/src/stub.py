@@ -1,10 +1,21 @@
 # Jormungandr - Onboarding
 from func.src.domain.user.model import UserModel
-from func.src.domain.validator import UserParams
+from func.src.domain.validators.validator import UserParams
 
-stub_user_params = UserParams(**{
-    'email': 'teste@teste.com',
-    'nickname': 'vnnstar',
-}).dict()
+# Third party
+import asyncio
 
-stub_user_model = UserModel(email=stub_user_params['email'], nickname=stub_user_params['nickname']).get_user_template()
+
+stub_payload_validated = UserParams(
+    **{
+        "email": "teste@teste.com",
+        "nickname": "vnnstar",
+    }
+).dict()
+
+stub_user_model = asyncio.run(
+    UserModel(
+        email=stub_payload_validated["email"],
+        nickname=stub_payload_validated["nickname"],
+    ).get_user_template()
+)

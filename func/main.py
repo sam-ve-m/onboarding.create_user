@@ -1,9 +1,9 @@
-# Jormungandr
+# Jormungandr - Onboarding
 from src.domain.enums.response.code import InternalCode
-from src.domain.validator import UserParams
+from src.domain.validators.validator import UserParams
 from src.services.user_register import UserService
 from src.domain.response.model import ResponseModel
-from src.domain.exceptions import (
+from src.domain.exceptions.exceptions import (
     InvalidEmail,
     EmailAlreadyExists,
     ErrorOnSendAuditLog,
@@ -18,11 +18,11 @@ from etria_logger import Gladsheim
 
 
 async def create_user() -> Response:
-    raw_params = request.json
+    raw_payload = request.json
     message = "Unexpected error occurred"
     try:
-        user_params = UserParams(**raw_params).dict()
-        user_service = UserService(user_params=user_params)
+        payload_validated = UserParams(**raw_payload).dict()
+        user_service = UserService(payload_validated=payload_validated)
         await user_service.verify_email_already_exists()
         success = await user_service.register()
         response = ResponseModel(
@@ -54,7 +54,7 @@ async def create_user() -> Response:
 
     except ErrorOnSendAuditLog as ex:
         message = "Audit::register_user_log::Error on trying to register log"
-        Gladsheim.warning(error=ex, message=message)
+        Gladsheim.info(error=ex, message=message)
         response = ResponseModel(
             success=False, code=InternalCode.PARTNERS_ERROR, message=message
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)

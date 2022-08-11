@@ -1,4 +1,4 @@
-# Jormungandr
+# Jormungandr - Onboarding
 from ..enums.user.features import Features
 from ..enums.user.level import UserLevel
 from ..enums.user.view_type import ViewType
@@ -27,7 +27,7 @@ class UserModel:
         self.token_valid_after = datetime.utcnow()
         self.terms = {}
 
-    def get_user_template(self) -> dict:
+    async def get_user_template(self) -> dict:
         user_metadata = {
             "email": self.email,
             "nick_name": self.nickname,
@@ -45,7 +45,7 @@ class UserModel:
         }
         return user_metadata
 
-    def get_audit_prospect_user_template(self) -> dict:
+    async def get_audit_prospect_user_template(self) -> dict:
         prospect_user_template = {
             "unique_id": self.unique_id,
             "email": self.email,
@@ -54,8 +54,6 @@ class UserModel:
         }
         return prospect_user_template
 
-    def get_iara_user_template(self):
-        iara_user_template = {
-            "unique_id": self.unique_id
-        }
+    async def get_iara_user_template(self):
+        iara_user_template = {"unique_id": self.unique_id}
         return iara_user_template

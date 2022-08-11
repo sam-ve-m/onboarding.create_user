@@ -7,13 +7,13 @@ from motor.motor_asyncio import AsyncIOMotorClient
 class MongoDBInfrastructure:
 
     client = None
-    url = config("MONGO_CONNECTION_URL")
 
     @classmethod
     def get_client(cls):
         if cls.client is None:
             try:
-                cls.client = AsyncIOMotorClient(cls.url)
+                url = config("MONGO_CONNECTION_URL")
+                cls.client = AsyncIOMotorClient(url)
             except Exception as ex:
                 Gladsheim.error(error=ex)
                 raise ex
