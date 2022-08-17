@@ -14,10 +14,10 @@ spec:
   ingressconfig:
     annotations: null
     host: '*'
-    path: /onboarding/create-user
+    path: /onboarding/create_user
     tls: ""
   method: ""
   methods:
   - POST
   prefix: ""
-  relativeurl: /onboarding/create-user
+  relativeurl: /onboarding/create_user
