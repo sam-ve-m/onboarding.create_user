@@ -1,6 +1,6 @@
 # Jormungandr - Onboarding
 from func.src.services.user_register import UserService
-from tests.src.stub import stub_payload_validated
+from tests.src.services.stubs import stub_payload_validated
 
 
 # Third party

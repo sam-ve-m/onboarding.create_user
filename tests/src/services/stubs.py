@@ -11,11 +11,12 @@ stub_payload_validated = UserParams(
         "email": "teste@teste.com",
         "nickname": "vnnstar",
     }
-).dict()
-
-stub_user_model = asyncio.run(
-    UserModel(
-        email=stub_payload_validated["email"],
-        nickname=stub_payload_validated["nickname"],
-    ).get_user_template()
 )
+
+stub_user_model = UserModel(
+        email=stub_payload_validated.email,
+        nickname=stub_payload_validated.nickname,
+    )
+
+
+stub_user_model_template = asyncio.run(stub_user_model.get_user_template())

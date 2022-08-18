@@ -21,7 +21,7 @@ async def create_user() -> Response:
     raw_payload = request.json
     message = "Unexpected error occurred"
     try:
-        payload_validated = UserParams(**raw_payload).dict()
+        payload_validated = UserParams(**raw_payload)
         user_service = UserService(payload_validated=payload_validated)
         await user_service.verify_email_already_exists()
         success = await user_service.register()

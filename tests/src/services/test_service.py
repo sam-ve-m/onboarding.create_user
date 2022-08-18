@@ -1,6 +1,6 @@
 # Jormungandr-Onboarding
 from func.src.domain.exceptions.exceptions import EmailAlreadyExists
-from .stub import stub_user_model
+from .stubs import stub_user_model_template
 
 # Standards
 from unittest.mock import patch
@@ -43,7 +43,7 @@ async def test_when_run_function_then_find_one_was_called(mock_find_one, user_se
 @pytest.mark.asyncio
 @patch("func.src.services.user_register.IaraClient.send_to_email_verification_queue")
 @patch("func.src.services.user_register.UserRepository.insert_one_user")
-@patch("func.src.services.user_register.Audit.register_user_log")
+@patch("func.src.services.user_register.Audit.record_message_log")
 async def test_when_user_not_exist_then_successfully_register(
     mock_audit, mock_insert_one, mock_iara, user_service
 ):
@@ -56,10 +56,10 @@ async def test_when_user_not_exist_then_successfully_register(
 @patch("func.src.services.user_register.IaraClient.send_to_email_verification_queue")
 @patch(
     "func.src.services.user_register.UserModel.get_user_template",
-    return_value=stub_user_model,
+    return_value=stub_user_model_template,
 )
 @patch("func.src.services.user_register.UserRepository.insert_one_user")
-@patch("func.src.services.user_register.Audit.register_user_log")
+@patch("func.src.services.user_register.Audit.record_message_log")
 async def test_when_user_not_exist_then_mocks_was_called(
     mock_audit, mock_insert_one, mock_user, mock_iara, user_service
 ):

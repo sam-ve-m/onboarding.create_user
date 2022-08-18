@@ -12,7 +12,7 @@ class Audit:
     audit_client = Persephone
 
     @classmethod
-    async def register_user_log(cls, user_model: UserModel):
+    async def record_message_log(cls, user_model: UserModel):
         message = await user_model.get_audit_prospect_user_template()
         partition = QueueTypes.PROSPECT_USER
         topic = config("PERSEPHONE_TOPIC_USER")
@@ -28,3 +28,4 @@ class Audit:
         )
         if not success:
             raise ErrorOnSendAuditLog
+        return True
