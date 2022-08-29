@@ -10,5 +10,7 @@ class ErrorOnSendAuditLog(Exception):
     msg = "Error when trying to send log audit on Persephone"
 
 
-class ErrorOnRegisterUserSocial(Exception):
-    msg = "Error when trying to register user on Social"
+class ErrorOnSendIaraMessage(Exception):
+    msg = (
+        "Jormungandr-Onboarding::send_to_email_verification_queue::Error when trying send message to Iara"
+    )
