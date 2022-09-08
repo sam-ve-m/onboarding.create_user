@@ -11,7 +11,7 @@ from pydantic import BaseModel, validator
 
 class UserParams(BaseModel):
     email: str
-    nickname: Optional[str]
+    nick_name: str
 
     @validator("email")
     def validate_email(cls, email: str):

@@ -9,13 +9,13 @@ import asyncio
 stub_payload_validated = UserParams(
     **{
         "email": "teste@teste.com",
-        "nickname": "vnnstar",
+        "nick_name": "vnnstar",
     }
 )
 
 stub_user_model = UserModel(
         email=stub_payload_validated.email,
-        nickname=stub_payload_validated.nickname,
+        nick_name=stub_payload_validated.nick_name,
     )
 
 
