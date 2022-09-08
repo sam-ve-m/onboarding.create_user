@@ -16,9 +16,9 @@ class Scope:
 
 
 class UserModel:
-    def __init__(self, email: str, nickname: str):
+    def __init__(self, email: str, nick_name: str):
         self.email = email
-        self.nickname = nickname
+        self.nick_name = nick_name
         self.unique_id = str(uuid4())
         self.created_at = datetime.utcnow()
         self.scope = Scope()
@@ -30,7 +30,7 @@ class UserModel:
     async def get_user_template(self) -> dict:
         user_metadata = {
             "email": self.email,
-            "nick_name": self.nickname,
+            "nick_name": self.nick_name,
             "unique_id": self.unique_id,
             "created_at": self.created_at,
             "scope": {
@@ -49,8 +49,7 @@ class UserModel:
         prospect_user_template = {
             "unique_id": self.unique_id,
             "email": self.email,
-            "nick_name": self.nickname,
-            "create_user_time_stamp": int(datetime.utcnow().timestamp()),
+            "nick_name": self.nick_name,
         }
         return prospect_user_template
 
