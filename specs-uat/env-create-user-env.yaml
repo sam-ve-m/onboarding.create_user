@@ -13,7 +13,6 @@ spec:
     image: nexus.sigame.com.br/fission-builder-3.8:0.0.1
   imagepullsecret: "nexus-v3"
   keeparchive: false
-  poolsize: 3
   resources: {}
   runtime:
     container:
@@ -42,4 +41,4 @@ spec:
               value: "lionx"
             - name: MONGODB_USER_COLLECTION
               value: "users"
-  version: 2
+  version: 3
