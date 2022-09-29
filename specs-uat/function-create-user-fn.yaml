@@ -51,5 +51,5 @@ spec:
     packageref:
       name: create-user-fn-fa62a37c-05a5-4fb5-bfbf-5b0bd8518c35
       namespace: default
-  requestsPerPod: 1
+  requestsPerPod: 100000
   resources: {}
