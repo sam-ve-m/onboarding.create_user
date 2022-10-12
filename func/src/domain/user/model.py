@@ -23,6 +23,7 @@ class UserModel:
         self.created_at = datetime.utcnow()
         self.scope = Scope()
         self.is_active_user = False
+        self.email_validated = False
         self.must_to_first_login = True
         self.token_valid_after = datetime.utcnow()
         self.terms = {}
@@ -31,6 +32,7 @@ class UserModel:
         user_metadata = {
             "email": self.email,
             "nick_name": self.nick_name,
+            "email_validated": self.email_validated,
             "unique_id": self.unique_id,
             "created_at": self.created_at,
             "scope": {

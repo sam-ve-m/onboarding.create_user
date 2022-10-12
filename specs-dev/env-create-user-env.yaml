@@ -36,7 +36,7 @@ spec:
             - name: PERSEPHONE_KAFKA_BROKERS
               value: "cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
             - name: IARA_KAFKA_BROKERS
-              value: "172.30.8.254:9094"
+              value: "cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
             - name: MONGO_CONNECTION_URL
               value: "mongodb://jormungandr:LIwn1In32LdowPqma@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary"
             - name: MONGODB_DATABASE_NAME
