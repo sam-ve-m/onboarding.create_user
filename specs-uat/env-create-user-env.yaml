@@ -33,7 +33,7 @@ spec:
               value: "prospect_user_schema"
             - name: PERSEPHONE_TOPIC_USER
               value: "sphinx-persephone.user.crud"
-            - name: APERSEPHONE_KAFKA_BROKERS
+            - name: PERSEPHONE_KAFKA_BROKERS
               value: "cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
             - name: IARA_KAFKA_BROKERS
               value: "cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
