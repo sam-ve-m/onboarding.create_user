@@ -21,6 +21,7 @@ class UserModel:
         self.nick_name = nick_name
         self.unique_id = str(uuid4())
         self.created_at = datetime.utcnow()
+        self.email_updated_at = datetime.utcnow()
         self.scope = Scope()
         self.is_active_user = False
         self.email_validated = False
@@ -44,6 +45,7 @@ class UserModel:
             "must_do_first_login": self.must_to_first_login,
             "token_valid_after": self.token_valid_after,
             "terms": self.terms,
+            "email_updated_at": self.email_updated_at,
         }
         return user_metadata
 
