@@ -6,7 +6,8 @@ from src.domain.response.model import ResponseModel
 from src.domain.exceptions.exceptions import (
     InvalidEmail,
     EmailAlreadyExists,
-    ErrorOnSendAuditLog, ErrorOnSendIaraMessage,
+    ErrorOnSendAuditLog,
+    ErrorOnSendIaraMessage,
 )
 
 # Standards
@@ -71,6 +72,8 @@ async def create_user() -> flask.Response:
         message = "Unexpected error occurred"
         Gladsheim.error(error=ex, message=str(ex))
         response = ResponseModel(
-            success=False, code=InternalCode.INTERNAL_SERVER_ERROR.value, message=message
+            success=False,
+            code=InternalCode.INTERNAL_SERVER_ERROR.value,
+            message=message,
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
         return response

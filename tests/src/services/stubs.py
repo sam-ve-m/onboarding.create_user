@@ -14,9 +14,9 @@ stub_payload_validated = UserParams(
 )
 
 stub_user_model = UserModel(
-        email=stub_payload_validated.email,
-        nick_name=stub_payload_validated.nick_name,
-    )
+    email=stub_payload_validated.email,
+    nick_name=stub_payload_validated.nick_name,
+)
 
 
 stub_user_model_template = asyncio.run(stub_user_model.get_user_template())
