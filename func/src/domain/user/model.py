@@ -1,11 +1,10 @@
-# Jormungandr - Onboarding
+from datetime import datetime
+from uuid import uuid4
+
 from ..enums.user.features import Features
 from ..enums.user.level import UserLevel
 from ..enums.user.view_type import ViewType
-
-# Standards
-from datetime import datetime
-from uuid import uuid4
+from ..models.device_info import DeviceInfo
 
 
 class Scope:
@@ -16,9 +15,10 @@ class Scope:
 
 
 class UserModel:
-    def __init__(self, email: str, nick_name: str):
+    def __init__(self, email: str, nick_name: str, device_info: DeviceInfo):
         self.email = email
         self.nick_name = nick_name
+        self.device_info = device_info
         self.unique_id = str(uuid4())
         self.created_at = datetime.utcnow()
         self.email_updated_at = datetime.utcnow()
@@ -54,6 +54,8 @@ class UserModel:
             "unique_id": self.unique_id,
             "email": self.email,
             "nick_name": self.nick_name,
+            "device_info": self.device_info.device_info,
+            "device_id": self.device_info.device_id,
         }
         return prospect_user_template
 

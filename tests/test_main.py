@@ -1,28 +1,36 @@
-# PROJECT IMPORTS
+import logging.config
 from http import HTTPStatus
+from unittest.mock import patch, MagicMock
 
 import flask
 import pytest
-from unittest.mock import patch, MagicMock
-
 from decouple import RepositoryEnv, Config
-import logging.config
 
+from src.transports.device_info.transport import DeviceSecurity
 
 with patch.object(RepositoryEnv, "__init__", return_value=None):
     with patch.object(Config, "__init__", return_value=None):
         with patch.object(Config, "__call__"):
             with patch.object(logging.config, "dictConfig"):
                 from etria_logger import Gladsheim
-                from main import create_user
-                from src.domain.enums.response.code import InternalCode
-                from src.domain.response.model import ResponseModel
-                from src.domain.exceptions.exceptions import (
+                from main import (
+                    create_user,
                     InvalidEmail,
                     EmailAlreadyExists,
                     ErrorOnSendAuditLog,
                     ErrorOnSendIaraMessage,
+                    DeviceInfoRequestFailed,
+                    DeviceInfoNotSupplied,
                 )
+                from src.domain.enums.response.code import InternalCode
+                from src.domain.response.model import ResponseModel
+
+                # from src.domain.exceptions.exceptions import (
+                #     InvalidEmail,
+                #     EmailAlreadyExists,
+                #     ErrorOnSendAuditLog,
+                #     ErrorOnSendIaraMessage, DeviceInfoRequestFailed, DeviceInfoNotSupplied,
+                # )
                 from src.domain.validators.validator import UserParams
                 from src.services.user_register import UserService
 
@@ -55,6 +63,20 @@ iara_case = (
     "Audit::register_user_log::Error on trying to register log",
     HTTPStatus.INTERNAL_SERVER_ERROR,
 )
+device_info_request_case = (
+    DeviceInfoRequestFailed(),
+    "Error trying to get device info",
+    InternalCode.INTERNAL_SERVER_ERROR,
+    "Error trying to get device info",
+    HTTPStatus.INTERNAL_SERVER_ERROR,
+)
+no_device_info_case = (
+    DeviceInfoNotSupplied(),
+    "Device info not supplied",
+    InternalCode.INVALID_PARAMS,
+    "Device info not supplied",
+    HTTPStatus.BAD_REQUEST,
+)
 value_exception_case = (
     ValueError("dummy"),
     "dummy",
@@ -81,6 +103,8 @@ exception_case = (
         iara_case,
         value_exception_case,
         exception_case,
+        device_info_request_case,
+        no_device_info_case,
     ],
 )
 @patch.object(UserParams, "__init__", return_value=None)
@@ -90,7 +114,9 @@ exception_case = (
 @patch.object(Gladsheim, "error")
 @patch.object(ResponseModel, "__init__", return_value=None)
 @patch.object(ResponseModel, "build_http_response")
+@patch.object(DeviceSecurity, "get_device_info")
 async def test_create_user_raising_errors(
+    device_info,
     mocked_build_response,
     mocked_response_instance,
     mocked_logger,
@@ -128,7 +154,9 @@ dummy_response = "response"
 @patch.object(Gladsheim, "error")
 @patch.object(ResponseModel, "__init__", return_value=None)
 @patch.object(ResponseModel, "build_http_response", return_value=dummy_response)
+@patch.object(DeviceSecurity, "get_device_info")
 async def test_create_user(
+    device_info,
     mocked_build_response,
     mocked_response_instance,
     mocked_logger,

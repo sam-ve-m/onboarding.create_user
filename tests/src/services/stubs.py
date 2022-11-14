@@ -1,10 +1,8 @@
-# Jormungandr - Onboarding
-from func.src.domain.user.model import UserModel
-from func.src.domain.validators.validator import UserParams
-
-# Third party
 import asyncio
 
+from src.domain.models.device_info import DeviceInfo
+from src.domain.user.model import UserModel
+from src.domain.validators.validator import UserParams
 
 stub_payload_validated = UserParams(
     **{
@@ -13,9 +11,12 @@ stub_payload_validated = UserParams(
     }
 )
 
+stub_device_info = DeviceInfo({"precision": 1}, "")
+
 stub_user_model = UserModel(
     email=stub_payload_validated.email,
     nick_name=stub_payload_validated.nick_name,
+    device_info=stub_device_info,
 )
 
 

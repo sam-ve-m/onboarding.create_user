@@ -1,29 +1,36 @@
-# Jormungandr - Onboarding
+from http import HTTPStatus
+
+import flask
+from etria_logger import Gladsheim
+
 from src.domain.enums.response.code import InternalCode
-from src.domain.validators.validator import UserParams
-from src.services.user_register import UserService
-from src.domain.response.model import ResponseModel
 from src.domain.exceptions.exceptions import (
     InvalidEmail,
     EmailAlreadyExists,
     ErrorOnSendAuditLog,
     ErrorOnSendIaraMessage,
+    DeviceInfoRequestFailed,
+    DeviceInfoNotSupplied,
 )
-
-# Standards
-from http import HTTPStatus
-
-# Third party
-import flask
-from etria_logger import Gladsheim
+from src.domain.response.model import ResponseModel
+from src.domain.validators.validator import UserParams
+from src.services.user_register import UserService
+from src.transports.device_info.transport import DeviceSecurity
 
 
 async def create_user() -> flask.Response:
     raw_payload = flask.request.json
+    encoded_device_info = flask.request.headers.get("x-device-info")
+
     try:
         payload_validated = UserParams(**raw_payload)
-        user_service = UserService(payload_validated=payload_validated)
+        device_info = await DeviceSecurity.get_device_info(encoded_device_info)
+
+        user_service = UserService(
+            payload_validated=payload_validated, device_info=device_info
+        )
         await user_service.verify_email_already_exists()
+
         success = await user_service.register()
         response = ResponseModel(
             success=success,
@@ -58,6 +65,26 @@ async def create_user() -> flask.Response:
         response = ResponseModel(
             success=False, code=InternalCode.PARTNERS_ERROR.value, message=message
         ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
+        return response
+
+    except DeviceInfoRequestFailed as ex:
+        message = "Error trying to get device info"
+        Gladsheim.error(error=ex, message=message)
+        response = ResponseModel(
+            success=False,
+            code=InternalCode.INTERNAL_SERVER_ERROR.value,
+            message=ex.msg,
+        ).build_http_response(status=HTTPStatus.INTERNAL_SERVER_ERROR)
+        return response
+
+    except DeviceInfoNotSupplied as ex:
+        message = "Device info not supplied"
+        Gladsheim.error(error=ex, message=message)
+        response = ResponseModel(
+            success=False,
+            code=InternalCode.INVALID_PARAMS.value,
+            message=ex.msg,
+        ).build_http_response(status=HTTPStatus.BAD_REQUEST)
         return response
 
     except ValueError as ex:

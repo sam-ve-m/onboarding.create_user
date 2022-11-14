@@ -1,11 +1,8 @@
-# Jormungandr-Onboarding
 from func.src.domain.exceptions.exceptions import EmailAlreadyExists
 from .stubs import stub_user_model_template
 
-# Standards
 from unittest.mock import patch
 
-# Third party
 import pytest
 
 
