@@ -1,9 +1,9 @@
-# OUTSIDE LIBRARIES
-from src.infrastructures.mongo_db.infrastructure import MongoDBInfrastructure
 from unittest.mock import patch, MagicMock
+
 from decouple import AutoConfig
 from motor import motor_asyncio
 
+from src.infrastructures.mongo_db.infrastructure import MongoDBInfrastructure
 
 dummy_env = "dummy env"
 

@@ -1,11 +1,9 @@
-# Jormungandr
-from ...domain.exceptions.exceptions import ErrorOnSendAuditLog
-from ...domain.enums.queue.types import QueueTypes
-from ...domain.user.model import UserModel
-
-# Third party
 from decouple import config
 from persephone_client import Persephone
+
+from ...domain.enums.queue.types import QueueTypes
+from ...domain.exceptions.exceptions import ErrorOnSendAuditLog
+from ...domain.user.model import UserModel
 
 
 class Audit:
