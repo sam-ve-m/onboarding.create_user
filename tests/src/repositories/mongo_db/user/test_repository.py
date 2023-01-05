@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, call
-from src.repositories.user.repository import UserRepository
+from func.src.repositories.user.repository import UserRepository
 
 dummy_email = "email"
 

@@ -1,8 +1,8 @@
 import asyncio
 
-from src.domain.models.device_info import DeviceInfo
-from src.domain.user.model import UserModel
-from src.domain.validators.validator import UserParams
+from func.src.domain.models.device_info import DeviceInfo
+from func.src.domain.user.model import UserModel
+from func.src.domain.validators.validator import UserParams
 
 stub_payload_validated = UserParams(
     **{
