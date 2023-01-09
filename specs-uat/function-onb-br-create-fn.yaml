@@ -1,35 +1,35 @@
 include:
-- ./func/*
+- fission.py
 kind: ArchiveUploadSpec
-name: func-VKrp
+name: fission-py-tsbj
 
 ---
 apiVersion: fission.io/v1
 kind: Package
 metadata:
   creationTimestamp: null
-  name: create-user-fn-804c399d-de25-4899-a5d2-afe1288f5bc7
+  name: onb-br-create-fn-31c2f3f9-d0e2-4104-b851-99d396c47936
   namespace: default
 spec:
   deployment:
     checksum: {}
+    type: url
+    url: archive://fission-py-tsbj
   environment:
-    name: create-user-env
+    name: onb-br-create-env
     namespace: default
   source:
     checksum: {}
-    type: url
-    url: archive://func-VKrp
 status:
-  buildstatus: pending
-  lastUpdateTimestamp: "2022-05-31T17:33:30Z"
+  buildstatus: none
+  lastUpdateTimestamp: "2023-01-05T16:02:49Z"
 
 ---
 apiVersion: fission.io/v1
 kind: Function
 metadata:
   creationTimestamp: null
-  name: create-user-fn
+  name: onb-br-create-fn
   namespace: default
 spec:
   InvokeStrategy:
@@ -38,18 +38,24 @@ spec:
       MaxScale: 3
       MinScale: 1
       SpecializationTimeout: 120
-      TargetCPUPercent: 80
+      TargetCPUPercent: 0
+      hpaMetrics:
+      - resource:
+          name: cpu
+          target:
+            averageUtilization: 80
+            type: Utilization
+        type: Resource
     StrategyType: execution
   concurrency: 500
   environment:
-    name: create-user-env
+    name: onb-br-create-env
     namespace: default
   functionTimeout: 60
   idletimeout: 120
   package:
-    functionName: main.create_user
     packageref:
-      name: create-user-fn-804c399d-de25-4899-a5d2-afe1288f5bc7
+      name: onb-br-create-fn-31c2f3f9-d0e2-4104-b851-99d396c47936
       namespace: default
-  requestsPerPod: 100000
+  requestsPerPod: 10000
   resources: {}

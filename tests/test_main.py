@@ -6,14 +6,14 @@ import flask
 import pytest
 from decouple import RepositoryEnv, Config
 
-from src.transports.device_info.transport import DeviceSecurity
+from func.src.transports.device_info.transport import DeviceSecurity
 
 with patch.object(RepositoryEnv, "__init__", return_value=None):
     with patch.object(Config, "__init__", return_value=None):
         with patch.object(Config, "__call__"):
             with patch.object(logging.config, "dictConfig"):
                 from etria_logger import Gladsheim
-                from main import (
+                from func.main import (
                     create_user,
                     InvalidEmail,
                     EmailAlreadyExists,
@@ -22,17 +22,10 @@ with patch.object(RepositoryEnv, "__init__", return_value=None):
                     DeviceInfoRequestFailed,
                     DeviceInfoNotSupplied,
                 )
-                from src.domain.enums.response.code import InternalCode
-                from src.domain.response.model import ResponseModel
-
-                # from src.domain.exceptions.exceptions import (
-                #     InvalidEmail,
-                #     EmailAlreadyExists,
-                #     ErrorOnSendAuditLog,
-                #     ErrorOnSendIaraMessage, DeviceInfoRequestFailed, DeviceInfoNotSupplied,
-                # )
-                from src.domain.validators.validator import UserParams
-                from src.services.user_register import UserService
+                from func.src.domain.enums.response.code import InternalCode
+                from func.src.domain.response.model import ResponseModel
+                from func.src.domain.validators.validator import UserParams
+                from func.src.services.user_register import UserService
 
 
 invalid_email_case = (

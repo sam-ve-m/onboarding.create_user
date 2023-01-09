@@ -2,26 +2,24 @@ apiVersion: fission.io/v1
 kind: Environment
 metadata:
   creationTimestamp: null
-  name: create-user-env
+  name: onb-br-create-env
   namespace: default
 spec:
   builder:
-    command: build
     container:
       name: ""
       resources: {}
-    image: nexus.sigame.com.br/fission-builder-3.8:0.0.1
-  imagepullsecret: "nexus-v3"
+  imagepullsecret: nexus-v3
   keeparchive: false
   resources: {}
   runtime:
     container:
       name: ""
       resources: {}
-    image: nexus.sigame.com.br/fission-async:0.1.7
+    image: nexus.sigame.com.br/fission-onboarding-br-create:0.1.0
     podspec:
       containers:
-        - name: create-user-env
+        - name: onb-br-create-env
           env:
             - name: ROOT_LOG_LEVEL
               value: "INFO"
@@ -38,7 +36,7 @@ spec:
             - name: IARA_KAFKA_BROKERS
               value: "cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
             - name: MONGO_CONNECTION_URL
-              value: "mongodb://jormungandr:MMhsdanNNds32Malmnwqyrte@172.30.18.223:41000,172.30.19.240:41000,172.30.19.71:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary&ssl=false"
+              value: "mongodb://jormungandr:LIwn1In32LdowPqma@172.30.10.75:41000/?authSource=admin&replicaSet=rslionx&readPreference=secondary"
             - name: MONGODB_DATABASE_NAME
               value: "lionx"
             - name: MONGODB_USER_COLLECTION

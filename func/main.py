@@ -3,8 +3,8 @@ from http import HTTPStatus
 import flask
 from etria_logger import Gladsheim
 
-from src.domain.enums.response.code import InternalCode
-from src.domain.exceptions.exceptions import (
+from func.src.domain.enums.response.code import InternalCode
+from func.src.domain.exceptions.exceptions import (
     InvalidEmail,
     EmailAlreadyExists,
     ErrorOnSendAuditLog,
@@ -12,10 +12,10 @@ from src.domain.exceptions.exceptions import (
     DeviceInfoRequestFailed,
     DeviceInfoNotSupplied,
 )
-from src.domain.response.model import ResponseModel
-from src.domain.validators.validator import UserParams
-from src.services.user_register import UserService
-from src.transports.device_info.transport import DeviceSecurity
+from func.src.domain.response.model import ResponseModel
+from func.src.domain.validators.validator import UserParams
+from func.src.services.user_register import UserService
+from func.src.transports.device_info.transport import DeviceSecurity
 
 
 async def create_user() -> flask.Response:
