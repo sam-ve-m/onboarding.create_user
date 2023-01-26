@@ -1,0 +1,23 @@
+apiVersion: fission.io/v1
+kind: HTTPTrigger
+metadata:
+  creationTimestamp: null
+  name: onb-br-create-rt
+  namespace: default
+spec:
+  createingress: false
+  functionref:
+    functionweights: null
+    name: onb-br-create-fn
+    type: name
+  host: ""
+  ingressconfig:
+    annotations: null
+    host: '*'
+    path: /onboarding/create_user
+    tls: ""
+  method: ""
+  methods:
+  - POST
+  prefix: ""
+  relativeurl: /onboarding/create_user
